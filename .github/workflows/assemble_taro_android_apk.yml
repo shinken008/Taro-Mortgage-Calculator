@@ -30,6 +30,7 @@ jobs:
       - name: Build Taro JS Bundle
         run: |
           taro build
+        uses: actions/upload-artifact@v1
         with:
           name: index.android.bundle
           path: dist/rn/android/
