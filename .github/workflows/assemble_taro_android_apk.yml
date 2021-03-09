@@ -19,7 +19,7 @@ jobs:
       - name: Install Taro cli
         run: |
           npm i -g @tarojs/cli
-  build-android:
+  build-taro:
     needs: install-and-test
     runs-on: ubuntu-latest
     steps: 
@@ -29,12 +29,16 @@ jobs:
           npm install
       - name: Build Taro JS Bundle
         run: |
-          taro build
+          yarn build:rn-android
       - name: Upload Taro Products
         uses: actions/upload-artifact@v1
         with:
           name: index.android.bundle
           path: dist/rn/android/
+  build-android:
+    needs: install-and-test
+    runs-on: ubuntu-latest
+    steps: 
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
