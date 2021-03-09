@@ -16,9 +16,6 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm install
-      - name: Install Taro cli
-        run: |
-          npm i -g @tarojs/cli
   build-taro:
     needs: install-and-test
     runs-on: ubuntu-latest
