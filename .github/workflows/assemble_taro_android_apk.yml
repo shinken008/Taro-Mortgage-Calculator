@@ -13,17 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install npm dependencies
+      - name: Install yarn dependencies
         run: |
-          npm install
+          yarn install
   build-taro:
     needs: install-and-test
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
-      - name: Install npm dependencies
+      - name: Install yarn dependencies
         run: |
-          npm install
+          yarn install
       - name: Build Taro JS Bundle
         run: |
           yarn build:rn-android
