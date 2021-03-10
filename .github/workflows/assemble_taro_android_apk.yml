@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fecth Taro Shell Project
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
         with:
           repository: 4332weizi/taro-native-shell
       - name: into shell project
