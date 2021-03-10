@@ -63,9 +63,9 @@ jobs:
           yarn install
       - name: Download Taro Products
         uses: actions/download-artifact@v2
-          with:
-            name: taro-android-products
-            path: ~/download/taro-products
+        with: 
+          name: taro-android-products
+          path: ~/download/taro-products
       - name: Extra Taro Products
           run: |
           mv ~/download/taro-products/index.android.bundle ./android/app/src/main/assets/index.android.bundle
