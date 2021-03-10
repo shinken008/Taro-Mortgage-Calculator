@@ -12,10 +12,11 @@ jobs:
   fetch-shell-project:
     runs-on: ubuntu-latest
     steps:
-      - uses:actions/checkout@v2
+      - name: Fecth Taro Shell Project
+      - uses: actions/checkout@v2
         with:
           repository: 4332weizi/taro-native-shell
-      - name: Fecth Taro Shell Project
+      - name: into shell project
         run: |
           cd taro-native-shell
   build-android:
