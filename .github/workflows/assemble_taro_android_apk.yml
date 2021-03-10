@@ -68,8 +68,7 @@ jobs:
           path: ~/download/taro-products
       - name: Extra Taro Products
           run: |
-          mv ~/download/taro-products/index.android.bundle ./android/app/src/main/assets/index.android.bundle
-          mv ~/download/taro-products/* ./android/app/src/main/res/
+          mv ~/download/taro-products/index.android.bundle ./android/app/src/main/assets/index.android.bundle && mv ~/download/taro-products/* ./android/app/src/main/res/
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
