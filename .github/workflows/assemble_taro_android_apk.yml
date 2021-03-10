@@ -20,9 +20,9 @@ jobs:
         run: |
           yarn build:rn-android
       - name: Upload Taro Products
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
-          name: index.android.bundle
+          name: taro-android-products
           path: dist/rn/android/
   build-android:
     needs: build-taro
@@ -32,7 +32,7 @@ jobs:
         run: |
           cd android && ./gradlew assembleRelease
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
