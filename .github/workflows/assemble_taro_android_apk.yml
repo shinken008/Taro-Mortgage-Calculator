@@ -9,17 +9,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install yarn dependencies
-        run: |
-          yarn install
   build-taro:
     needs: install-and-test
     runs-on: ubuntu-latest
     steps: 
+      - uses: actions/checkout@v2
+      - name: Install yarn dependencies
+        run: |
+          yarn install
       - name: Build Taro JS Bundle
         run: |
           yarn build:rn-android
