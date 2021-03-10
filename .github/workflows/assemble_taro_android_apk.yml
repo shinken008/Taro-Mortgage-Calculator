@@ -46,12 +46,9 @@ jobs:
       - name: Install yarn dependencies
         run: |
           yarn install
-      - name: Change Directory to android 
-        run: |
-          cd android
       - name: Build Android Release
         run: |
-          ./gradlew assembleRelease
+          cd android && ./gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
