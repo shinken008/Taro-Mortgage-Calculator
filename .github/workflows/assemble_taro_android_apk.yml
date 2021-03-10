@@ -9,15 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install yarn dependencies
-        run: |
-          yarn install
   build-taro:
-    needs: install-and-test
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
@@ -33,7 +25,7 @@ jobs:
           name: index.android.bundle
           path: dist/rn/android/
   build-android:
-    needs: install-and-test
+    needs: build-taro
     runs-on: ubuntu-latest
     steps: 
       - name: Build Android Release
