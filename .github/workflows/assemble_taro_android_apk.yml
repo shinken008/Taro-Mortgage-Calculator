@@ -9,23 +9,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  fetch-shell-project:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fecth Taro Shell Project
-        uses: actions/checkout@v2
-        with:
-          repository: 4332weizi/taro-native-shell
-      - name: into shell project
-        run: |
-          ls
-  build-android:
-    needs: fetch-shell-project
+  build-taro:
     runs-on: ubuntu-latest
     steps: 
-      - name: into shell project
+      - uses: actions/checkout@v2
+      - name: Install yarn dependencies
         run: |
-          ls
+          yarn install
+      - name: Build Taro JS Bundle
+        run: |
+          yarn build:rn-android
+      - name: Upload Taro Products
+        uses: actions/upload-artifact@v2
+        with:
+          name: taro-android-products
+          path: dist/rn/android/
+  build-android:
+    needs: build-taro
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Fecth Taro Shell Project
+      - uses: actions/checkout@v2
+        with:
+          repository: 4332weizi/taro-native-shell
+      - name: Into Android Directory
+        run: |
+          cd android
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
