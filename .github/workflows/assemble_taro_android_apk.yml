@@ -32,6 +32,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 4332weizi/taro-native-shell
+      - name: Install yarn dependencies
+        run: |
+          yarn install
       - name: Into Android Directory
         run: |
           cd android
