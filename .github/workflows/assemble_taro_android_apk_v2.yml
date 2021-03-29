@@ -37,7 +37,7 @@ jobs:
           yarn install
       - name: Link node_modules
         run: |
-          ln -s ./node_modules ./ShellProject/node_modules
+          ln ./node_modules ./ShellProject/node_modules
       - name: Build Taro JS Bundle
         run: |
           yarn build:rn-android
