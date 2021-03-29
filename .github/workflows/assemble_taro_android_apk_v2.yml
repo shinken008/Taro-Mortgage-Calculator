@@ -37,9 +37,9 @@ jobs:
           yarn install
       - name: Link node_modules
         run: |
-          ln -s ./node_modules ./ShellProject/node_modules
-          cat ./node_modules/react-native/react.gradle
-          cat ./ShellProject/node_modules/react-native/react.gradle
+          ln -s node_modules ShellProject/node_modules
+          cat node_modules/react-native/react.gradle
+          cat ShellProject/node_modules/react-native/react.gradle
       - name: Build Taro JS Bundle
         run: |
           yarn build:rn-android
