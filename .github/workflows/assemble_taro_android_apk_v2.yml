@@ -1,0 +1,59 @@
+name: Assemble Taro Android Apk
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build-taro:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Fecth Taro Shell Project
+        uses: actions/checkout@v2
+        with:
+          repository: 4332weizi/taro-native-shell
+          path: ShellProject
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install yarn dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          yarn install
+      - name: ln node_modules
+        run: |
+          ln -s ./node_modules ./ShellProject/node_modules
+      - name: Build Taro JS Bundle
+        run: |
+          yarn build:rn-android
+      - name: Upload Taro Products
+        uses: actions/upload-artifact@v2
+        with:
+          name: taro-android-products
+          path: dist/rn/android/
+      - name: mv
+        run: |
+          mv ./dist/rn/android/index.android.bundle ./ShellProject/android/app/src/main/assets/index.android.bundle
+          rsync -a ./dist/rn/android/ ./ShellProject/android/app/src/main/res/
+      - name: Build Android Debug
+        run: |
+          cd android && ./gradlew assembleDebug
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-debug.apk
+          path: android/app/build/outputs/apk/debug/
