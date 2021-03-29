@@ -55,6 +55,10 @@ jobs:
       - name: Build Android Debug
         run: |
           cd ./ShellProject/android && ./gradlew assembleDebug
+      - name: ls
+        run: |
+          $PWD
+          ls -a
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
