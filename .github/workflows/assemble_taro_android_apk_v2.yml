@@ -12,16 +12,17 @@ jobs:
   build-taro:
     runs-on: ubuntu-latest
     steps: 
-      - uses: actions/checkout@v2
-      - name: Fecth Taro Shell Project
+      - name: Fetch Project
+        uses: actions/checkout@v2
+      - name: Fetch Taro Shell Project
         uses: actions/checkout@v2
         with:
           repository: 4332weizi/taro-native-shell
           path: ShellProject
-      - name: Get yarn cache directory path
+      - name: Get Yarn Cache Directory Path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Cache node modules
+      - name: Cache Node Modules
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
@@ -30,11 +31,11 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Install yarn dependencies
+      - name: Install Yarn Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           yarn install
-      - name: ln node_modules
+      - name: Link node_modules
         run: |
           ln -s ./node_modules ./ShellProject/node_modules
       - name: Build Taro JS Bundle
@@ -45,13 +46,13 @@ jobs:
         with:
           name: taro-android-products
           path: dist/rn/android/
-      - name: mv
+      - name: Move Taro JS Bund
         run: |
           mv ./dist/rn/android/index.android.bundle ./ShellProject/android/app/src/main/assets/index.android.bundle
           rsync -a ./dist/rn/android/ ./ShellProject/android/app/src/main/res/
       - name: Build Android Debug
         run: |
-          cd android && ./gradlew assembleDebug
+          cd ./ShellProject/android && ./gradlew assembleDebug
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
