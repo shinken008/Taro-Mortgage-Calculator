@@ -63,7 +63,7 @@ jobs:
       - name: build
         if: steps.gradle-cache.outputs.cache-hit != 'true'
         run: |
-          cd ./ShellProject/android && ./gradlew build
+          cd ./ShellProject/android && cat app/build.gradle && ./gradlew build
       - name: Build Android Debug
         run: |
           cd ./ShellProject/android && ./gradlew assembleDebug
