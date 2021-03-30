@@ -17,7 +17,7 @@ jobs:
       - name: Fetch Taro Shell Project
         uses: actions/checkout@v2
         with:
-          repository: NervJS/taro-native-shell
+          repository: 4332weizi/taro-native-shell
           path: ShellProject
       - name: Get Yarn Cache Directory Path
         id: yarn-cache-dir-path
@@ -38,8 +38,6 @@ jobs:
       - name: Link node_modules
         run: |
           ln -s $PWD/node_modules $PWD/ShellProject/node_modules
-          cat node_modules/react-native/react.gradle
-          cat ShellProject/node_modules/react-native/react.gradle
       - name: Build Taro JS Bundle
         run: |
           yarn build:rn-android
