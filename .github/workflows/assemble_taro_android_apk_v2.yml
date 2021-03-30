@@ -62,10 +62,10 @@ jobs:
         env:
           cache-name: gradle-cache
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          path: ~/.gradle
+          key: ${{ runner.os }}-gradle
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle
       - name: build
         if: steps.gradle-cache.outputs.cache-hit != 'true'
         run: |
