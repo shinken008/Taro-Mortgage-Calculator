@@ -20,6 +20,12 @@ jobs:
           repository: 4332weizi/taro-native-shell
           ref: 0.63.2_origin
           path: ShellProject
+      - name: Cache node_modules
+        uses: actions/cache
+        with:
+          path: node_modules
+          key: node_modules
+          restore-keys: node_modules
       - name: Get Yarn Cache Directory Path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
