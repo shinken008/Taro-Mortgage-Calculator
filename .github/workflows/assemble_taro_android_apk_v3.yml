@@ -34,17 +34,12 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/node_modules
-          key: ${{ runner.os }}-node_modules
-          restore-keys: ${{ runner.os }}-node_modules
-      - name: Store node_modules Cache For Current Workflow
-        uses: actions/cache@v2
-        with:
-          path: ${{ github.workspace }}/node_modules
           key: ${{ runner.os }}-node_modules-${{ env.task-id }}
+          restore-keys: ${{ runner.os }}-node_modules
       - name: Store Current Workspace
         uses: actions/cache@v2
         with:
-          path: ${{ github.workspace }}/
+          path: ${{ github.workspace }}
           key: ${{ runner.os }}-workspace-${{ env.task-id }}
       - name: Yarn Install
         run: |
@@ -56,7 +51,7 @@ jobs:
       - name: Restore workspace
         uses: actions/cache@v2
         with:
-          path: ${{ github.workspace }}/
+          path: ${{ github.workspace }}
           key: ${{ runner.os }}-workspace-${{ env.task-id }}
       - name: Build Taro JS Bundle
         run: |
