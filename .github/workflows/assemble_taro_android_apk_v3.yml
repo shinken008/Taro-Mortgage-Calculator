@@ -43,7 +43,7 @@ jobs:
       - name: Store Current Workspace
         uses: actions/cache@v2
         with:
-          path: ${{ github.workspace }}/*
+          path: ${{ github.workspace }}/src
           key: ${{ runner.os }}-workspace-${{ env.task-id }}
       - name: Yarn Install
         run: |
@@ -55,7 +55,7 @@ jobs:
       - name: Restore workspace
         uses: actions/cache@v2
         with:
-          path: ${{ github.workspace }}/
+          path: ${{ github.workspace }}/src
           key: ${{ runner.os }}-workspace-${{ env.task-id }}
       - name: Build Taro JS Bundle
         run: |
