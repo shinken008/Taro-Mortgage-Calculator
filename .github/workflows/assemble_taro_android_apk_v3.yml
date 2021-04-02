@@ -67,9 +67,9 @@ jobs:
           key: ${{ runner.os }}-gradle
           restore-keys: |
             ${{ runner.os }}-gradle
-      - name: Build Android
+      - name: pre assembleDebug
         run: |
-          cd ./taro-native-shell/android && ./gradlew build
+          cd ./taro-native-shell/android && ./gradlew assembleDebug
       - name: Assemble Android Debug
         run: |
           cd ./taro-native-shell/android && ./gradlew assembleDebug
