@@ -43,7 +43,7 @@ jobs:
       - name: Store Current Workspace
         uses: actions/cache@v2
         with:
-          path: *
+          path: ./
           key: ${{ runner.os }}-workspace-${{ env.task-id }}
       - name: Yarn Install
         run: |
