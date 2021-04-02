@@ -60,6 +60,7 @@ jobs:
           key: ${{ runner.os }}-workspace-${{ env.task-id }}
       - name: Build Taro JS Bundle
         run: |
+          ls -a
           yarn build:rn-android
       - name: Store Taro Products Cache
         uses: actions/cache@v2
