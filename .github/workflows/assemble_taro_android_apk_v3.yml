@@ -115,6 +115,7 @@ jobs:
           key: taro-android-products-${{ env.task-id }}
       - name: Move Taro JS Bundle
         run: |
+          ls -a
           mv ./dist/rn/android/index.android.bundle ./android/app/src/main/assets/index.android.bundle
           rsync -a ./dist/rn/android/ ./android/app/src/main/res/
       - name: Assemble Android Debug
