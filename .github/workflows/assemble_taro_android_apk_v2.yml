@@ -53,7 +53,7 @@ jobs:
         with:
           name: taro-android-products
           path: dist/rn/android/
-      - name: Move Taro JS Bund
+      - name: Move Taro JS Bundle
         run: |
           mv ./dist/rn/android/index.android.bundle ./ShellProject/android/app/src/main/assets/index.android.bundle
           rsync -a ./dist/rn/android/ ./ShellProject/android/app/src/main/res/
