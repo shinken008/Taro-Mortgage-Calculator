@@ -100,7 +100,7 @@ jobs:
           path: .
           key: ${{ runner.os }}-build-cache-${{ env.task-id }}
   build-android:
-    needs: pre-build-android,build-taro
+    needs: [pre-build-android, build-taro]
     runs-on: ubuntu-latest
     steps:
       - name: restore build cache
