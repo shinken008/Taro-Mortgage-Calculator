@@ -102,6 +102,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: restore build cache
+        uses: actions/cache@v2
         with:
           path: .
           key: ${{ runner.os }}-build-cache-${{ env.task-id }}
