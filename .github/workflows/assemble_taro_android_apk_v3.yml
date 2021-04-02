@@ -108,6 +108,11 @@ jobs:
         with:
           path: android
           key: ${{ runner.os }}-build-cache-${{ env.task-id }}
+      - name: Restore node_modules Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/node_modules
+          key: ${{ runner.os }}-node_modules-${{ env.task-id }}
       - name: Cache Taro Products
         uses: actions/cache@v2
         with:
