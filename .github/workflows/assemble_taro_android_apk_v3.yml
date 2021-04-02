@@ -36,9 +36,6 @@ jobs:
           path: ${{ github.workspace }}/node_modules
           key: ${{ runner.os }}-node_modules
           restore-keys: ${{ runner.os }}-node_modules
-      - name: Yarn Install
-        run: |
-          yarn install
       - name: Store node_modules Cache For Current Workflow
         uses: actions/cache@v2
         with:
@@ -49,6 +46,9 @@ jobs:
         with:
           path: ${{ github.workspace }}/
           key: ${{ runner.os }}-workspace-${{ env.task-id }}
+      - name: Yarn Install
+        run: |
+          yarn install
   build-taro:
     needs: init-yarn-cache
     runs-on: ubuntu-latest
