@@ -9,8 +9,8 @@ on:
 
   workflow_dispatch:
 
-  env:
-    task-id: ${{ github.sha }}
+env:
+  task-id: ${{ github.sha }}
 
 jobs:
   init-yarn-cache:
