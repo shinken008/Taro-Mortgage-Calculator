@@ -71,6 +71,7 @@ jobs:
   pre-build-android:
     needs: init-yarn-cache
     runs-on: ubuntu-latest
+    steps:
       - name: Fetch Taro Shell Project
         uses: actions/checkout@v2
         with:
