@@ -40,13 +40,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install Yarn Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           yarn install
       - name: Link node_modules
         run: |
           ln -s $PWD/node_modules $PWD/taro-native-shell/node_modules
-      - name: Build Taro JS Bundle
+      - name: Build Taro
         run: |
           yarn build:rn-android
       - name: Upload Taro Products
@@ -54,7 +53,7 @@ jobs:
         with:
           name: taro-android-products
           path: dist/rn/android/
-      - name: Move Taro JS Bundle
+      - name: Move Taro Products
         run: |
           mv ./dist/rn/android/index.android.bundle ./taro-native-shell/android/app/src/main/assets/index.android.bundle
           rsync -a ./dist/rn/android/ ./taro-native-shell/android/app/src/main/res/
