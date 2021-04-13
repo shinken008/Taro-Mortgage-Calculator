@@ -47,6 +47,8 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+      - name: Merge Dependencies
+        run: ./github/workflows/merge-package.js ./taro-native-shell/package.json ./package.json ./package.json
       - name: Install Yarn Dependencies
         run: |
           yarn install
