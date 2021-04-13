@@ -48,7 +48,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Merge Dependencies
-        run: ls -a && node ${{ github.workspace }}/.github/merge-package.js ${{ github.workspace }}/taro-native-shell/package.json ${{ github.workspace }}/package.json ${GITHUB_WORKSPACE}/package.json
+        run: |
+          node ${{ github.workspace }}/.github/merge-package.js ${{ github.workspace }}/taro-native-shell/package.json ${{ github.workspace }}/package.json ${GITHUB_WORKSPACE}/package.json
+          cat ${{ github.workspace }}/package.json
       - name: Install Yarn Dependencies
         run: |
           yarn install
