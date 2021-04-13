@@ -6,7 +6,7 @@ var self = process.argv[3]
 // 输出的package.json
 var dest = process.argv[4]
 
-console.log('merge %s %s into %s', from, to, dest)
+console.log('merge %s %s into %s', shell, self, dest)
 
 var fs = require('fs');
 var shellJson = require(shell)
