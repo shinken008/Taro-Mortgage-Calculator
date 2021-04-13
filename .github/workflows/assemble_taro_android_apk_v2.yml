@@ -1,5 +1,13 @@
 name: Android Release
 
+env:
+  APP_ID=taro.mortgage.calculator
+  APP_NAME=Taro Mortgage Caclulator
+  APP_VERSION_NAME=1.0
+  APP_VERSION_CODE=10
+  SHELL_REPO=4332weizi/taro-native-shell
+  SHELL_REPO_REF=0.63.2_origin
+
 on:
   push:
     branches: [ master ]
@@ -10,7 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-taro:
+  build-android:
     runs-on: ubuntu-latest
     steps: 
       - name: Fetch Project
@@ -18,8 +26,8 @@ jobs:
       - name: Fetch Taro Shell Project
         uses: actions/checkout@v2
         with:
-          repository: 4332weizi/taro-native-shell
-          ref: 0.63.2_origin
+          repository: ${{ env.SHELL_REPO }}
+          ref: ${{ env.SHELL_REPO_REF }}
           path: taro-native-shell
       - name: Cache node_modules
         uses: actions/cache@v2
@@ -68,7 +76,7 @@ jobs:
             ${{ runner.os }}-gradle
       - name: Assemble Android Release
         run: |
-          cd ./taro-native-shell/android && ./gradlew assembleRelease
+          cd ./taro-native-shell/android && ./gradlew assembleRelease -Papp_id=${{ env.APP_ID }} -Papp_name=${{ env.APP_NAME }} -Pversion_code=${{ env.APP_VERSION_CODE }} -Pversion_name=${{ env.APP_VERSION_NAME }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
