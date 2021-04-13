@@ -1,13 +1,5 @@
 name: Android Release
 
-env:
-  APP_ID=taro.mortgage.calculator
-  APP_NAME=Taro Mortgage Caclulator
-  APP_VERSION_NAME=1.0
-  APP_VERSION_CODE=10
-  SHELL_REPO=4332weizi/taro-native-shell
-  SHELL_REPO_REF=0.63.2_origin
-
 on:
   push:
     branches: [ master ]
@@ -16,6 +8,14 @@ on:
     branches: [ master ]
 
   workflow_dispatch:
+
+env:
+  APP_ID=taro.mortgage.calculator
+  APP_NAME=Taro Mortgage Caclulator
+  APP_VERSION_NAME=1.0
+  APP_VERSION_CODE=10
+  SHELL_REPO=4332weizi/taro-native-shell
+  SHELL_REPO_REF=0.63.2_origin
 
 jobs:
   build-android:
