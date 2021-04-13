@@ -31,7 +31,7 @@ jobs:
           path: taro-native-shell
       - name: Merge Dependencies
         run: |
-          node ${{ github.workspace }}/.github/merge-package.js ${{ github.workspace }}/taro-native-shell/package.json ${{ github.workspace }}/package.json ${GITHUB_WORKSPACE}/package.json
+          node ${{ github.workspace }}/.github/merge-package.js ${{ github.workspace }}/package.json ${{ github.workspace }}/taro-native-shell/package.json ${GITHUB_WORKSPACE}/package.json
           cat ${{ github.workspace }}/package.json
       - name: Cache node_modules
         uses: actions/cache@v2
