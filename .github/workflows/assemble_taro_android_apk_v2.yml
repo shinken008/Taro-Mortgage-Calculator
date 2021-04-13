@@ -1,4 +1,4 @@
-name: Android Release
+name: Android Debug
 
 on:
   push:
@@ -84,5 +84,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-release.apk
-          path: ${{ github.workspace }}/taro-native-shell/android/app/build/outputs/apk/release/
+          name: app-debug.apk
+          path: ${{ github.workspace }}/taro-native-shell/android/app/build/outputs/apk/debug/
