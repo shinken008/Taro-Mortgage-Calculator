@@ -44,12 +44,6 @@ jobs:
             ${{ github.workspace }}/taro-native-shell/package.json \
             ${{ github.workspace }}/package.json
           cat ${{ github.workspace }}/package.json
-      - name: Cache node_modules Folder
-        uses: actions/cache@v2
-        with:
-          path: ${{ github.workspace }}/node_modules
-          key: ${{ runner.os }}-node_modules
-          restore-keys: ${{ runner.os }}-node_modules
       - name: Get Yarn Cache Directory Path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -59,15 +53,18 @@ jobs:
           cache-name: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+      - name: Cache node_modules Folder
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/node_modules
+          key: ${{ runner.os }}-node_modules
+          restore-keys: ${{ runner.os }}-node_modules
       - name: Install Dependencies
         run: |
           yarn install
-      - name: Link node_modules Folder to Shell Project
-        run: |
-          ln -s $PWD/node_modules $PWD/taro-native-shell/node_modules
       - name: Build Taro
         run: |
           yarn build:rn-android
@@ -76,6 +73,9 @@ jobs:
         with:
           name: taro-android-products
           path: dist/rn/android/
+      - name: Link node_modules Folder to Shell Project
+        run: |
+          ln -s $PWD/node_modules $PWD/taro-native-shell/node_modules
       - name: Merge Resources
         run: |
           mv ./dist/rn/android/index.android.bundle ./taro-native-shell/android/app/src/main/assets/index.android.bundle
