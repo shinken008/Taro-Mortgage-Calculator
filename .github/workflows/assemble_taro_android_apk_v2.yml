@@ -75,6 +75,8 @@ jobs:
       - name: Merge Resources
         run: |
           mv ./dist/rn/android/index.android.bundle ./taro-native-shell/android/app/src/main/assets/index.android.bundle
+          if [ ${{ env.APP_ICON }} = "ic_launcher" ]; then 
+            rm ./taro-native-shell/android/app/src/main/res/*/ic_launcher.png
           rsync -a ./dist/rn/android/ ./taro-native-shell/android/app/src/main/res/
           rsync -a ${{ env.APP_RES }}/ ./taro-native-shell/android/app/src/main/res/
       - name: Cache Gradle
