@@ -19,6 +19,7 @@ env:
   APP_RES: android/res/
   APP_ICON: ic_launcher
   APP_TYPE: release
+  APP_ABI_FILTERS: armeabi-v7a, arm64-v8a
   KEYSTORE_FILE: android/keystore.jks
   KEYSTORE_PASSWORD: 123456
   KEYSTORE_KEY_ALIAS: app
@@ -76,7 +77,7 @@ jobs:
         run: |
           mv ./dist/rn/android/index.android.bundle ./taro-native-shell/android/app/src/main/assets/index.android.bundle
           if [ ${{ env.APP_ICON }} = ic_launcher ]; then 
-            rm ./taro-native-shell/android/app/src/main/res/*/ic_launcher.png
+            rm ./taro-native-shell/android/app/src/main/res/mipmap-*dpi/ic_launcher.png
           fi
           rsync -a ./dist/rn/android/ ./taro-native-shell/android/app/src/main/res/
           rsync -a ${{ env.APP_RES }}/ ./taro-native-shell/android/app/src/main/res/
@@ -98,6 +99,7 @@ jobs:
             -Papp_icon=${{env.APP_ICON}} \
             -Pversion_code=${{ env.APP_VERSION_CODE }} \
             -Pversion_name=${{ env.APP_VERSION_NAME }} \
+            -Pabi_filters=${{ env.APP_ABI_FILTERS }}
             -Pkeystore_file=${{ github.workspace }}/${{ env.KEYSTORE_FILE }} \
             -Pkeystore_password=${{ env.KEYSTORE_PASSWORD }} \
             -Pkeystore_key_alias=${{ env.KEYSTORE_KEY_ALIAS }} \
