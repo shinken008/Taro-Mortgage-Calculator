@@ -29,19 +29,22 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps: 
-      - name: Fetch Project
+      - name: Checkout Project
         uses: actions/checkout@v2
-      - name: Fetch Taro Shell Project
+      - name: Checkout Taro Shell Project
         uses: actions/checkout@v2
         with:
           repository: ${{ env.SHELL_REPO }}
           ref: ${{ env.SHELL_REPO_REF }}
           path: taro-native-shell
-      - name: Merge Dependencies
+      - name: Merge Package Dependencies
         run: |
-          node ${{ github.workspace }}/.github/merge-package.js ${{ github.workspace }}/package.json ${{ github.workspace }}/taro-native-shell/package.json ${GITHUB_WORKSPACE}/package.json
+          node ${{ github.workspace }}/.github/merge-package.js \
+            ${{ github.workspace }}/package.json \
+            ${{ github.workspace }}/taro-native-shell/package.json \
+            ${{ github.workspace }}/package.json
           cat ${{ github.workspace }}/package.json
-      - name: Cache node_modules
+      - name: Cache node_modules Folder
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/node_modules
@@ -50,19 +53,19 @@ jobs:
       - name: Get Yarn Cache Directory Path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Cache Node Modules
+      - name: Cache Yarn
         uses: actions/cache@v2
         env:
-          cache-name: cache-node-modules
+          cache-name: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Install Yarn Dependencies
+      - name: Install Dependencies
         run: |
           yarn install
-      - name: Link node_modules
+      - name: Link node_modules Folder to Shell Project
         run: |
           ln -s $PWD/node_modules $PWD/taro-native-shell/node_modules
       - name: Build Taro
@@ -104,8 +107,8 @@ jobs:
             -Pkeystore_password=${{ env.KEYSTORE_PASSWORD }} \
             -Pkeystore_key_alias=${{ env.KEYSTORE_KEY_ALIAS }} \
             -Pkeystore_key_password=${{ env.KEYSTORE_KEY_PASSWORD }}
-      - name: Upload Artifact
+      - name: Upload Android Products
         uses: actions/upload-artifact@v2
         with:
-          name: app-${{ env.APP_TYPE }}.apk
-          path: ${{ github.workspace }}/taro-native-shell/android/app/build/outputs/apk/${{ env.APP_TYPE }}/
+          name: app-${{ env.APP_TYPE }}
+          path: ${{ github.workspace }}/taro-native-shell/android/app/build/outputs/apk/${{ env.APP_TYPE }}/app-${{ env.APP_TYPE }}.apk
