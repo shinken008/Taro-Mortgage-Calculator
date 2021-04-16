@@ -16,7 +16,7 @@ env:
   APP_NAME: Taro Mortgage Caclulator
   APP_VERSION_NAME: 1.0
   APP_VERSION_CODE: 10
-  APP_RES: android/res
+  APP_RES: android/res/
   APP_ICON: ic_launcher
   APP_TYPE: release
   KEYSTORE_FILE: android/keystore.jks
