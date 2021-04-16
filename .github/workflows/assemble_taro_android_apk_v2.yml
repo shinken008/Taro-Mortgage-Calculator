@@ -99,7 +99,7 @@ jobs:
             -Papp_icon=${{env.APP_ICON}} \
             -Pversion_code=${{ env.APP_VERSION_CODE }} \
             -Pversion_name=${{ env.APP_VERSION_NAME }} \
-            -Pabi_filters='${{ env.APP_ABI_FILTERS }}'
+            -Pabi_filters='${{ env.APP_ABI_FILTERS }}' \
             -Pkeystore_file=${{ github.workspace }}/${{ env.KEYSTORE_FILE }} \
             -Pkeystore_password=${{ env.KEYSTORE_PASSWORD }} \
             -Pkeystore_key_alias=${{ env.KEYSTORE_KEY_ALIAS }} \
