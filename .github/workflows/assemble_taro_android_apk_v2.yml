@@ -1,5 +1,7 @@
+# 工作流名称
 name: Android Release
 
+# 触发工作流程的事件
 on:
   push:
     branches: [ master ]
@@ -9,6 +11,7 @@ on:
 
   workflow_dispatch:
 
+# 工作流环境变量
 env:
   # 壳工程
   SHELL_REPO: 4332weizi/taro-native-shell
@@ -41,6 +44,7 @@ env:
   # 密钥库别名口令
   KEYSTORE_KEY_PASSWORD: abcdefg
 
+# 工作流作业
 jobs:
   build-android:
     runs-on: ubuntu-latest
