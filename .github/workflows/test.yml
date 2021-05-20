@@ -1,0 +1,108 @@
+name: 'build-test'
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - 'releases/*'
+# 工作流环境变量
+env:
+  # 壳工程
+  SHELL_REPO: 4332weizi/taro-native-shell
+  # 壳工程ref
+  SHELL_REPO_REF: 0.63.2_origin
+  # 壳工程目录
+  SHELL_REPO_PATH: taro-native-shell
+
+  # 应用的application_id
+  APP_ID: taro.mortgage.calculator
+  # 应用名称
+  APP_NAME: Taro Mortgage Caclulator
+  # 合并到应用res目录的资源
+  APP_RES: android/res/
+  # 应用icon
+  APP_ICON: ic_launcher
+  # 应用圆角icon
+  # APP_ROUND_ICON: ic_launcher_round
+  # 应用支持的CPU架构
+  APP_ABI_FILTERS: armeabi-v7a, arm64-v8a
+  # 打包类型
+  BUILD_TYPE: release
+  # 版本名称
+  VERSION_NAME: 1.0
+  # 版本号
+  VERSION_CODE: 10
+  # 密钥库文件
+  KEYSTORE_FILE: android/keystore.jks
+  # 密钥库口令
+  KEYSTORE_PASSWORD: 123456
+  # 密钥库别名
+  KEYSTORE_KEY_ALIAS: app
+  # 密钥库别名口令
+  KEYSTORE_KEY_PASSWORD: abcdefg
+
+jobs:
+  build: # make sure build/ci work properly
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # - uses: actions/checkout@v2
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+  
+      - run: npm install -g yarn
+      - run: yarn config set registry https://registry.yarnpkg.com
+
+      - uses: ./
+        with:
+          shellRepository: ${{ env.SHELL_REPO }}
+          shellRef: ${{ env.SHELL_REPO_REF }}
+          shellRepositoryPath: taro-native-shell
+      
+      - name: Assemble Android ${{ env.BUILD_TYPE }}
+        run: |
+          cd ./taro-native-shell/android && \
+          ./gradlew assemble${{ env.BUILD_TYPE }} \
+            -Papp_id=${{ env.APP_ID }} \
+            -Papp_name='${{ env.APP_NAME }}' \
+            -Papp_icon=${{env.APP_ICON}} \
+            -Papp_round_icon=${{env.APP_ROUND_ICON}} \
+            -Pversion_code=${{ env.VERSION_CODE }} \
+            -Pversion_name=${{ env.VERSION_NAME }} \
+            -Pabi_filters='${{ env.APP_ABI_FILTERS }}' \
+            -Pkeystore_file=${{ github.workspace }}/${{ env.KEYSTORE_FILE }} \
+            -Pkeystore_password=${{ env.KEYSTORE_PASSWORD }} \
+            -Pkeystore_key_alias=${{ env.KEYSTORE_KEY_ALIAS }} \
+            -Pkeystore_key_password=${{ env.KEYSTORE_KEY_PASSWORD }}
+      # - run: |
+      #     npm install
+      # - run: |
+      #     npm run all
+  
+  # test: # make sure the action works on a clean machine without building
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ./
+  #       with:
+  #         milliseconds: 1000
