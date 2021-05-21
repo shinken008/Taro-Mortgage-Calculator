@@ -42,12 +42,6 @@
       "eslint --fix"
     ]
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "@babel/runtime": "^7.7.7",
     "@tarojs/cli": "3.2.0-canary.5",
