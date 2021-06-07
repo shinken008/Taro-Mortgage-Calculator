@@ -77,9 +77,9 @@ jobs:
       #   run: |
       #     cd ./src && ls
 
-      - uses: ./
-        run: |
+      - run: |
           cd ./src && ls
+      - uses: ./
         with:
           shellRepository: ${{ env.SHELL_REPO }}
           shellRef: ${{ env.SHELL_REPO_REF }}
