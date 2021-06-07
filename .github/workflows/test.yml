@@ -73,13 +73,8 @@ jobs:
       - run: npm install -g yarn
       - run: yarn config set registry https://registry.yarnpkg.com
 
-      # - name: Assemble Android ${{ env.BUILD_TYPE }}
-      #   run: |
-      #     cd ./src && ls
-
-      - run: |
-          cd ./src && ls
       - uses: ./
+        working-directory: src
         with:
           shellRepository: ${{ env.SHELL_REPO }}
           shellRef: ${{ env.SHELL_REPO_REF }}
