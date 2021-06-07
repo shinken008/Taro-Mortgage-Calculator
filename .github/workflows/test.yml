@@ -73,27 +73,38 @@ jobs:
       - run: npm install -g yarn
       - run: yarn config set registry https://registry.yarnpkg.com
 
+      - name: Assemble Android ${{ env.BUILD_TYPE }}
+        run: |
+          cd ./src
+
       - uses: ./
         with:
           shellRepository: ${{ env.SHELL_REPO }}
           shellRef: ${{ env.SHELL_REPO_REF }}
           shellRepositoryPath: taro-native-shell
+
+      # - name: Assemble Android ${{ env.BUILD_TYPE }}
+      #   run: |
+      #     cd ./taro-native-shell/android && \
+      #     ./gradlew assemble${{ env.BUILD_TYPE }} \
+      #       -Papp_id=${{ env.APP_ID }} \
+      #       -Papp_name='${{ env.APP_NAME }}' \
+      #       -Papp_icon=${{env.APP_ICON}} \
+      #       -Papp_round_icon=${{env.APP_ROUND_ICON}} \
+      #       -Pversion_code=${{ env.VERSION_CODE }} \
+      #       -Pversion_name=${{ env.VERSION_NAME }} \
+      #       -Pabi_filters='${{ env.APP_ABI_FILTERS }}' \
+      #       -Pkeystore_file=${{ github.workspace }}/${{ env.KEYSTORE_FILE }} \
+      #       -Pkeystore_password=${{ env.KEYSTORE_PASSWORD }} \
+      #       -Pkeystore_key_alias=${{ env.KEYSTORE_KEY_ALIAS }} \
+      #       -Pkeystore_key_password=${{ env.KEYSTORE_KEY_PASSWORD }}
       
-      - name: Assemble Android ${{ env.BUILD_TYPE }}
-        run: |
-          cd ./taro-native-shell/android && \
-          ./gradlew assemble${{ env.BUILD_TYPE }} \
-            -Papp_id=${{ env.APP_ID }} \
-            -Papp_name='${{ env.APP_NAME }}' \
-            -Papp_icon=${{env.APP_ICON}} \
-            -Papp_round_icon=${{env.APP_ROUND_ICON}} \
-            -Pversion_code=${{ env.VERSION_CODE }} \
-            -Pversion_name=${{ env.VERSION_NAME }} \
-            -Pabi_filters='${{ env.APP_ABI_FILTERS }}' \
-            -Pkeystore_file=${{ github.workspace }}/${{ env.KEYSTORE_FILE }} \
-            -Pkeystore_password=${{ env.KEYSTORE_PASSWORD }} \
-            -Pkeystore_key_alias=${{ env.KEYSTORE_KEY_ALIAS }} \
-            -Pkeystore_key_password=${{ env.KEYSTORE_KEY_PASSWORD }}
+      # - name: Upload Android Products
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-${{ env.BUILD_TYPE }}
+      #     path: ${{ github.workspace }}/taro-native-shell/android/app/build/outputs/apk/${{ env.BUILD_TYPE }}/app-${{ env.BUILD_TYPE }}.apk
+
       # - run: |
       #     npm install
       # - run: |
