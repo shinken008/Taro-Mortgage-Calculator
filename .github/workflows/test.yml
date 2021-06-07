@@ -75,7 +75,7 @@ jobs:
 
       - name: Assemble Android ${{ env.BUILD_TYPE }}
         run: |
-          cd ./src
+          cd ./src && ls
 
       - uses: ./
         with:
