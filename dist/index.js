@@ -31149,7 +31149,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 /**
   env:
-    PLATFROM: ios/android
+    PLATFORM: ios/android
     BUILD_CMD:
     REPO:
     REPO_REF:
@@ -31194,13 +31194,13 @@ function run() {
         try {
             const env = process.env;
             let workspace = env['GITHUB_WORKSPACE'];
-            const platform = env['PLATFROM'];
-            const BUILD_CMD = env['BUILD_CMD'];
-            const APP_ICON = env['APP_ICON'];
-            const IOS_BUNDLE = env['IOS_BUNDLE'] || 'dist/index.bundle';
-            const IOS_ASSETS = env['IOS_ASSETS'] || 'dist/assets';
-            const ANDROID_BUNDLE = env['ANDROID_BUNDLE'] || 'dist/index.bundle';
-            const ANDROID_ASSETS = env['ANDROID_ASSETS'] || 'dist/assets';
+            const platform = core.getInput('PLATFORM');
+            const BUILD_CMD = core.getInput('BUILD_CMD');
+            const APP_ICON = core.getInput('APP_ICON');
+            const IOS_BUNDLE = core.getInput('IOS_BUNDLE') || 'dist/index.bundle';
+            const IOS_ASSETS = core.getInput('IOS_ASSETS') || 'dist/assets';
+            const ANDROID_BUNDLE = core.getInput('ANDROID_BUNDLE') || 'dist/index.bundle';
+            const ANDROID_ASSETS = core.getInput('ANDROID_ASSETS') || 'dist/assets';
             if (!workspace) {
                 throw new Error('GITHUB_WORKSPACE not defined');
             }
@@ -31214,7 +31214,6 @@ function run() {
                 ref: env.SHELL_REPO_REF || '0.64.0'
             };
             const settings = inputHelper.getInputs(repoSettings);
-            core.debug(`settings: ${JSON.stringify(settings)}`);
             try {
                 yield gitSourceProvider.getSource(settings);
             }
@@ -31270,7 +31269,7 @@ function run() {
                 yield execDebug(`rsync -a ${IOS_ASSETS} ${androidShellAssets}`);
             }
             else {
-                core.setFailed('Please set env.PLATFROM');
+                core.setFailed('Please set env.PLATFORM');
             }
             // // 6. 移动 bundle 文件到壳子制定目录 mv dist/rn/android/index.android.bundle taro-native-shell/android/app/src/main/assets/index.android.bundle
             // const androidShellBundle = path.join(
