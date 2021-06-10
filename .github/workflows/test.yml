@@ -78,7 +78,6 @@ jobs:
           REPO: ${{ env.SHELL_REPO }}
           REPO_REF: ${{ env.SHELL_REPO_REF }}
           REPO_PATH: taro-native-shell
-          PLATFORM: android
           BUILD_CMD: yarn build:rn
           IOS_BUNDLE: ios/main.jsbundle
           IOS_ASSETS: ios
