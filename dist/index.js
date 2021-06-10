@@ -31255,7 +31255,9 @@ function run() {
                 const androidShellBundle = path.join(repoSettings.repositoryPath, 'android/app/src/main/assets/index.android.bundle');
                 const androidShellAssets = path.join(repoSettings.repositoryPath, 'android/app/src/main/res');
                 if (APP_ICON === 'ic_launcher') {
-                    yield execDebug(`rm ./taro-native-shell/android/app/src/main/res/mipmap-*dpi/ic_launcher.png`);
+                    // await execDebug(
+                    //   `rm ./taro-native-shell/android/app/src/main/res/mipmap-*dpi/ic_launcher.png`
+                    // )
                 }
                 yield execDebug(`mv ${ANDROID_BUNDLE} ${androidShellBundle}`);
                 yield execDebug(`rsync -a ${ANDROID_ASSETS} ${androidShellAssets}`);
