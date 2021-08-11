@@ -9,9 +9,9 @@ on: # rebuild any PRs and main branch changes
 # 工作流环境变量
 env:
   # 壳工程
-  SHELL_REPO: 4332weizi/taro-native-shell
+  SHELL_REPO: shinken008/taro-native-shell
   # 壳工程ref
-  SHELL_REPO_REF: 0.63.2_origin
+  SHELL_REPO_REF: 0.63.2
   # 壳工程目录
   SHELL_REPO_PATH: taro-native-shell
 
