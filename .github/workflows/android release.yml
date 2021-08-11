@@ -4,8 +4,7 @@ on: # rebuild any PRs and main branch changes
   push:
     branches:
       - main
-      - master
-      - 'releases/*'
+      - android
 # 工作流环境变量
 env:
   # 壳工程
@@ -73,7 +72,8 @@ jobs:
       - run: npm install -g yarn
       - run: yarn config set registry https://registry.yarnpkg.com
 
-      - uses: ./
+      - name: taro-native-publish
+        uses: shinken008/taro-native-publish@0.4.0
         with:
           REPO: ${{ env.SHELL_REPO }}
           REPO_REF: ${{ env.SHELL_REPO_REF }}
@@ -84,6 +84,17 @@ jobs:
           ANDROID_BUNDLE: android/index.android.bundle
           ANDROID_ASSETS: android
           PLATFORM: android
+      # - uses: ./
+      #   with:
+      #     REPO: ${{ env.SHELL_REPO }}
+      #     REPO_REF: ${{ env.SHELL_REPO_REF }}
+      #     REPO_PATH: taro-native-shell
+      #     BUILD_CMD: yarn build:rn
+      #     IOS_BUNDLE: ios/main.jsbundle
+      #     IOS_ASSETS: ios
+      #     ANDROID_BUNDLE: android/index.android.bundle
+      #     ANDROID_ASSETS: android
+      #     PLATFORM: android
 
       - name: Assemble Android ${{ env.BUILD_TYPE }}
         run: |
